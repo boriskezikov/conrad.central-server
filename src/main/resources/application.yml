@@ -1,0 +1,21 @@
+spring:
+  liquibase:
+    change-log: 'classpath:liquibase/db.changelog-master.yml'
+    user: ${LIQUIBASE_USERNAME:oscentral}
+    password: ${LIQUIBASE_PASSWORD:oscentral}
+
+  datasource:
+    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:os_central_db}?currentSchema=${DATABASE_SCHEMA:oscentral}"
+    username: ${DATABASE_USERNAME:oscentral_user}
+    password: ${DATABASE_PASSWORD:oscentral_user}
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+os_central:
+  max_speed_allowed: ${OS_CENTRAL_MAX_SPEED_ALLOWED:80}
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER:localhost:9092}
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:os-central-core-consumer-group}
+    incidents_topic: ${INCIDENTS_TOPIC:INCIDENTS_TOPIC.RQ}

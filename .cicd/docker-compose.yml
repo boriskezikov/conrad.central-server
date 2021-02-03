@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+
+  postgres:
+    container_name: postgres_os_central
+    hostname: postgres_os_central
+    image: postgres:13.0
+    restart: always
+    volumes:
+      - .././.cicd/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    networks:
+      - os_central_net
+    ports:
+      - 5432:5432
+
+  os-central:
+    container_name: backend-os-central
+    build:
+      context: ../..
+      dockerfile: ""
+      network: os_central_net
+    ports:
+      - "8080:8080"
+    networks:
+      - db_connector_net
+    environment:
+      DATABASE_HOST: postgres_os_central
+      DATABASE_PORT: 5432
+      DATABASE_NAME: os_central_db
+      DATABASE_SCHEMA: oscentral
+      DATABASE_USERNAME: oscentral_user
+      DATABASE_PASSWORD: oscentral_user
+      LIQUIBASE_USERNAME: oscentral
+      LIQUIBASE_PASSWORD: oscentral
+volumes:
+  os-central:
+
+networks:
+  os_central_net:
+    driver: bridge
+    name: os_central_net

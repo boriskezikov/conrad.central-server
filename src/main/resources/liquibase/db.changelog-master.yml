@@ -1,0 +1,103 @@
+databaseChangeLog:
+
+  - property:
+      name: uuid_function
+      value: uuid_generate_v4()
+      dbms: postgresql
+
+  - changeSet:
+      id: 1
+      author: Boris Kezikov
+      changes:
+        - createTable:
+            tableName: penalty_approvals
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: guid
+                  type: UUID
+                  defaultValueComputed: ${uuid_function}
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: incident_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: penalty_approved
+                  type: BOOL
+                  constraints:
+                    nullable: false
+              - column:
+                  name: approved_by
+                  type: BIGINT
+              - column:
+                  name: updated
+                  type: TIMESTAMP
+        - createTable:
+            tableName: incident_records
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: guid
+                  type: UUID
+                  defaultValueComputed: ${uuid_function}
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: rq_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: system_uuid
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: car_license
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: actual_speed
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: speed_exceeded_by
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: car_type
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: incident_timestamp
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: incident_registered
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
