@@ -1,17 +1,19 @@
 spring:
   liquibase:
     change-log: 'classpath:liquibase/db.changelog-master.yml'
-    user: ${LIQUIBASE_USERNAME:oscentral}
-    password: ${LIQUIBASE_PASSWORD:oscentral}
 
   datasource:
-    url: "jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:8451}/${DATABASE_NAME:os_central_db}?currentSchema=${DATABASE_SCHEMA:oscentral}"
-    username: ${DATABASE_USERNAME:oscentral_user}
-    password: ${DATABASE_PASSWORD:oscentral_user}
-    driver-class-name: org.postgresql.Driver
+    url: "jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1"
+    driver-class-name: org.h2.Driver
+
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        hbm2ddl:
+            auto: create
 
 os_central:
   max_speed_allowed: ${OS_CENTRAL_MAX_SPEED_ALLOWED:80}

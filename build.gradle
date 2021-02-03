@@ -49,6 +49,10 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+
+
 }
 
 test {

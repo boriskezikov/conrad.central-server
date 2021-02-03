@@ -2,8 +2,8 @@ databaseChangeLog:
 
   - property:
       name: uuid_function
-      value: uuid_generate_v4()
-      dbms: postgresql
+      value: RANDOM_UUID()
+      dbms: h2
 
   - changeSet:
       id: 1
